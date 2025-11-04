@@ -162,4 +162,78 @@ router.get("/stats/leaguedashteamstats", async (req, res) => {
   }
 });
 
+router.get("/stats/scheduleleaguev2int", async (req, res) => {
+  try {
+    const queryParams = req.query;
+    const baseUrl = `${NBA_BASE_URL}/stats/scheduleleaguev2int`;
+
+    // Build query string
+    const queryString = Object.entries(queryParams)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join("&");
+    const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+
+    console.log(`Requesting: ${url}`);
+
+    const response = await fetch(url, {
+      headers: NBA_HEADERS,
+      timeout: 10000,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("NBA API Error:", {
+      message: error.message,
+      status: error.status,
+    });
+
+    res.status(500).json({
+      error: error.message,
+      status: error.status,
+    });
+  }
+});
+
+router.get("/stats/scheduleleaguev2", async (req, res) => {
+  try {
+    const queryParams = req.query;
+    const baseUrl = `${NBA_BASE_URL}/stats/scheduleleaguev2`;
+
+    // Build query string
+    const queryString = Object.entries(queryParams)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join("&");
+    const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+
+    console.log(`Requesting: ${url}`);
+
+    const response = await fetch(url, {
+      headers: NBA_HEADERS,
+      timeout: 10000,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("NBA API Error:", {
+      message: error.message,
+      status: error.status,
+    });
+
+    res.status(500).json({
+      error: error.message,
+      status: error.status,
+    });
+  }
+});
+
 module.exports = router;
